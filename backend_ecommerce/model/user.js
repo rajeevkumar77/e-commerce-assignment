@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-const sequelize = require("../util/database");
+const sequelize = require("../config/dbConnection");
 
 const User = sequelize.define("user", {
   id: {
@@ -31,7 +31,6 @@ const User = sequelize.define("user", {
     type: Sequelize.BOOLEAN,
     defaultValue:true
   }
-
 });
 
 

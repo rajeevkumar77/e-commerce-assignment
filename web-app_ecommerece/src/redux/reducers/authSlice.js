@@ -13,7 +13,7 @@ export const authenticateUser = createAsyncThunk(
       console.log("details",details);
       
       toast.success(res?.data?.message)
-      return {token:res.data.token,role:details?.role,_id:details?._id};
+      return {token:res.data.token,role:details?.role,id:details?.id};
     } catch (err) {
         toast.error(err.response?.data?.message || 'Authentication failed')
       return rejectWithValue(err.response?.data?.message || 'Authentication failed');
@@ -26,7 +26,7 @@ const authSlice = createSlice({
   initialState: {
     token: localStorage.getItem('token') || null,
     role:localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token'))?.role : null,
-    _id:localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token'))?._id : null,
+    id:localStorage.getItem('token') ? jwtDecode(localStorage.getItem('token'))?.id : null,
     loading: false,
     error: null,
   },
@@ -34,7 +34,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.token = null;
       state.role = null;
-      state._id = null;
+      state.id = null;
       localStorage.removeItem('token');
       window.location.href = "/"
     },
@@ -48,7 +48,7 @@ const authSlice = createSlice({
       .addCase(authenticateUser.fulfilled, (state, action) => {
         state.token = action.payload?.token;
         state.role = action.payload?.role;
-        state._id = action.payload?._id;
+        state.id = action.payload?.id;
         state.loading = false;
         localStorage.setItem('token', action.payload?.token);
       })

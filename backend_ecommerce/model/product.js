@@ -2,7 +2,7 @@
 
 const Sequelize = require("sequelize");
 
-const sequelize = require("../util/database");
+const sequelize = require("../config/dbConnection");
 
 const User = sequelize.define("product", {
   id: {
@@ -12,30 +12,30 @@ const User = sequelize.define("product", {
     primaryKey: true,
   },
   title: {
-    type: Sequelize.STRING(100),
+    type: Sequelize.TEXT,
     defaultValue: "",
   },
   description: {
-    type: Sequelize.STRING(400),
+    type: Sequelize.TEXT,
     defaultValue: "",
   },
   category: {
-    type: Sequelize.STRING(100),
+    type: Sequelize.TEXT,
     defaultValue: "",
   },
 
   price: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     defaultValue: 0
   },
 
   stock: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     defaultValue: 0
   },
 
   image: {
-    type: Sequelize.STRING(100),
+    type: Sequelize.TEXT,
     defaultValue: "",
   },
 

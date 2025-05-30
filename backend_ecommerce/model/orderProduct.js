@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 
-const sequelize = require("../util/database");
+const sequelize = require("../config/dbConnection");
 
 const Order = sequelize.define("orderProduct",
   {
@@ -11,19 +11,18 @@ const Order = sequelize.define("orderProduct",
         primaryKey: true,
       },
     userId:{
-        type:Sequelize.NUMBER,
+        type:Sequelize.INTEGER,
     },
     orderId:{
-        type:Sequelize.NUMBER,
+        type:Sequelize.INTEGER,
     },
     productId:{
-        type:Sequelize.NUMBER,
+        type:Sequelize.INTEGER,
     },
-    quantity: { type: Sequelize.NUMBER, defaultValue:0 },
-    price: { type: Sequelize.NUMBER, defaultValue:0 },
+    quantity: { type: Sequelize.INTEGER, defaultValue:0 },
+    price: { type: Sequelize.INTEGER, defaultValue:0 },
     isActive:{type:Sequelize.BOOLEAN, defaultValue:true}
-  },
-  { timestamps: true }
+  }
 );
 
 module.exports = Order

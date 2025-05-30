@@ -18,7 +18,7 @@ const CartPage = () => {
          navigate("/user/login")
          return
       }
-      dispatch(addProductToCart({ userId: auth?._id, date: new Date(), products: [{ _id: product?.productId,title: product?.title,image: product?.image,  price: product?.price, quantity: product?.quantity + 1 }] }));
+      dispatch(addProductToCart({ userId: auth?.id, date: new Date(), products: [{ id: product?.productId,title: product?.title,image: product?.image,  price: product?.price, quantity: product?.quantity + 1 }] }));
    };
 
    const handleDecreaseQuantity = (product) => {
@@ -31,7 +31,7 @@ const CartPage = () => {
          return
       }
       if (product?.quantity > 1) {
-         dispatch(addProductToCart({ userId: auth?._id, date: new Date(), products: [{ _id: product?.productId,title: product?.title,image: product?.image, price: product?.price, quantity: product?.quantity - 1 }] }));
+         dispatch(addProductToCart({ userId: auth?.id, date: new Date(), products: [{ id: product?.productId,title: product?.title,image: product?.image, price: product?.price, quantity: product?.quantity - 1 }] }));
       }
    };
 
@@ -49,7 +49,7 @@ const CartPage = () => {
          ) : (
             <div>
                {cartItems.map((item) => (
-                  <div key={item._id} className="flex bg-white shadow-md mb-6 p-4 rounded-lg">
+                  <div key={item.id} className="flex bg-white shadow-md mb-6 p-4 rounded-lg">
                      <div className="w-36 h-36 bg-gray-200 rounded-md overflow-hidden">
                         <img
                            src={item.image}
@@ -65,7 +65,7 @@ const CartPage = () => {
                         <div className="flex items-center space-x-4 mt-4">
                            <div className="flex items-center space-x-2">
                               <div>
-                              <label htmlFor={`quantity-${item._id}`} className="text-sm">Quantity</label>
+                              <label htmlFor={`quantity-${item.id}`} className="text-sm">Quantity</label>
                                  <div className="space-y-4">
                                     <div className="flex items-center space-x-4">
                                        <button
@@ -86,7 +86,7 @@ const CartPage = () => {
                                     </div>
                                  </div>
                                  <button
-                    onClick={() => handleRemoveItem(item._id)}
+                    onClick={() => handleRemoveItem(item.id)}
                     className="bg-red-500 text-white my-5 px-4 py-2 rounded-md hover:bg-red-600"
                   >
                     Remove

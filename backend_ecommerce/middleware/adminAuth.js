@@ -6,8 +6,8 @@ const adminAuth = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.ADMIN_SECRET_KEY);
-    if(decoded?._id){
-        const admin = Admin.findOne({_id:decoded?._id,isActive:true},{password:-1})
+    if(decoded?.id){
+        const admin = Admin.findOne({ where: {id:decoded?.id,isActive:true}})
         if(!admin) return  res.status(401).json({status:0, message: 'Account not found' });
         req.admin = admin;
         next();

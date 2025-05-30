@@ -11,7 +11,7 @@ const AdminAllProduct = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
-    const [deleteProduct,setDeleteProduct] = useState({_id:null,loading:false})
+    const [deleteProduct,setDeleteProduct] = useState({id:null,loading:false})
     const limit = 10;
     const navigate = useNavigate();
 
@@ -43,10 +43,10 @@ const AdminAllProduct = () => {
         debouncedFetch(search);
     }, [search]);
 
-    const deleteProductById = async(_id)=>{
-        setDeleteProduct({_id,loading:true})
+    const deleteProductById = async(id)=>{
+        setDeleteProduct({id,loading:true})
         try {
-            const res = await adminDeleteProductByIdApi(_id);
+            const res = await adminDeleteProductByIdApi(id);
             if(res?.status==200 && res?.data?.status==1){
                 toast.success(res?.data?.message)
                 fetchProducts()
@@ -55,7 +55,7 @@ const AdminAllProduct = () => {
             console.error('Fetch failed:', err);
             toast.error(err?.response?.message || "Something went wrong")
         }
-        setDeleteProduct({_id:null,loading:false})
+        setDeleteProduct({id:null,loading:false})
     }
 
 
@@ -105,14 +105,14 @@ const AdminAllProduct = () => {
                                     </tr>
                                 ) : (
                                     products.map((product) => (
-                                        <tr key={product._id} className="border-t hover:bg-gray-50">
+                                        <tr key={product.id} className="border-t hover:bg-gray-50">
                                             <td className="p-3">{product.title}</td>
                                             <td className="p-3">${product.price}</td>
                                             <td className="p-3">{product.category}</td>
                                             <td className="p-3">{product.stock}</td>
                                             <td className="p-3">
-                                                <Link to={`/admin/edit-product/${product?._id}`} className="text-blue-600 hover:underline mr-2">Edit</Link>
-                                                <button onClick={()=>deleteProductById(product?._id)} disabled={deleteProduct?.loading} className="text-red-500 hover:underline">{(deleteProduct?._id==product?._id && deleteProduct?.loading) ? <Loader size={20}/> : "Delete"} </button>
+                                                <Link to={`/admin/edit-product/${product?.id}`} className="text-blue-600 hover:underline mr-2">Edit</Link>
+                                                <button onClick={()=>deleteProductById(product?.id)} disabled={deleteProduct?.loading} className="text-red-500 hover:underline">{(deleteProduct?.id==product?.id && deleteProduct?.loading) ? <Loader size={20}/> : "Delete"} </button>
                                             </td>
                                         </tr>
                                     ))

@@ -15,11 +15,11 @@ const cartSlice = createSlice({
       const {cart,items} = action?.payload
       console.log("cart,items",cart,items,state?.items);
       
-      state.cartId = cart?._id
+      state.cartId = cart?.id
       state.amount = cart?.amount
-      localStorage.setItem('cartId', cart?._id); 
+      localStorage.setItem('cartId', cart?.id); 
       items?.forEach((newItem) => {
-        const index = state.items.findIndex((item) => item._id === newItem._id);
+        const index = state.items.findIndex((item) => item.id === newItem.id);
         if (index !== -1) {
           state.items[index] = newItem;
         } else {
@@ -30,11 +30,11 @@ const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       const {cart,cartProductId} =action?.payload
       state.cartAmt = cart.amount
-      state.items = state.items.filter(item => item._id !== cartProductId);
+      state.items = state.items.filter(item => item.id !== cartProductId);
     },
     setCart: (state, action) => {
-      const {_id,amount,cart_product} = action?.payload
-      state.cartId = _id;
+      const {id,amount,cart_product} = action?.payload
+      state.cartId = id;
       state.cartAmt = amount;
       state.items = cart_product;
     },

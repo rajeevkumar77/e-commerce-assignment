@@ -21,7 +21,7 @@ const Products = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
       {items.map((product) => (
-        <Link to={`/product/${product._id}`} key={product._id} className=" shadow-blue-300  hover:scale-105 rounded shadow-md">
+        <Link to={`/product/${product.id}`} key={product.id} className=" shadow-blue-300  hover:scale-105 rounded shadow-md">
           <img src={product?.image} alt={product?.title} className="w-full h-48 object-contain rounded mb-4" />
           <div className='p-4'>
           <h3 className="text-md">{product?.title?.slice(0,40)} ...</h3>

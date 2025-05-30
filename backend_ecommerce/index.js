@@ -33,4 +33,15 @@ sequelize.authenticate()
     console.error("Connection failed", err);
   });
 
+// sequelize
+//   .sync({
+//     alter: true,
+//   })
+//   .then(async (result) => {
+//     console.log("<-------------------- database sync completed -------------------->")
+//   })
+//   .catch((err) => {
+//     console.log(err);
+//   });
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

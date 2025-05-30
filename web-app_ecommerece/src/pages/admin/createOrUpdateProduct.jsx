@@ -78,7 +78,7 @@ const CreateOrUpdateProduct = () => {
         let data = res?.data?.data
         if(data){
             setInitialValues({
-                _id: data._id || '',
+                id: data.id || '',
                 title: data.title || '',
                 description: data.description || '',
                 price: data.price || '',

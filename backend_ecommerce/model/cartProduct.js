@@ -1,24 +1,28 @@
-const mongoose = require('mongoose');
 
-const cartSchema = new mongoose.Schema(
+const Sequelize = require('sequelize');
+const sequelize = require("../config/dbConnection");
+
+const CartProduct = sequelize.define("cartProduct",
   {
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'user'
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true,
     },
-    cartId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'cart'
+    userId: {
+      type: Sequelize.INTEGER,
     },
-    productId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'product'
+    orderId: {
+      type: Sequelize.INTEGER,
     },
-    quantity: { type: Number, default:0 },
-    price: { type: Number, default:0 },
-    isActive:{type:Boolean,default:true}
-  },
-  { timestamps: true }
+    productId: {
+      type: Sequelize.INTEGER,
+    },
+    quantity: { type: Sequelize.INTEGER, defaultValue:0 },
+    price: { type: Sequelize.INTEGER, defaultValue:0 },
+    isActive:{type:Sequelize.BOOLEAN, defaultValue:true}
+  }
 );
 
-module.exports = mongoose.model('cart_product', cartSchema);
+module.exports = CartProduct

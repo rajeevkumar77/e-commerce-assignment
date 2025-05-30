@@ -50,7 +50,7 @@ const ProductDetailPage = () => {
             return
         }
         if (product) {
-            dispatch(addProductToCart({userId:auth?._id,date:new Date(),products:[{_id:product?._id,price:product?.price,title:product?.title,image:product?.image, quantity: 1 }]}));
+            dispatch(addProductToCart({userId:auth?.id,date:new Date(),products:[{id:product?.id,price:product?.price,title:product?.title,image:product?.image, quantity: 1 }]}));
         }
     };
 
@@ -64,7 +64,7 @@ const ProductDetailPage = () => {
             return
         }
 
-        dispatch(addProductToCart({userId:auth?._id,date:new Date(),products:[{_id:product?._id,price:product?.price,title:product?.title,image:product?.image, quantity: cartProduct?.quantity + 1 }]}));
+        dispatch(addProductToCart({userId:auth?.id,date:new Date(),products:[{id:product?.id,price:product?.price,title:product?.title,image:product?.image, quantity: cartProduct?.quantity + 1 }]}));
     };
 
     const handleDecreaseQuantity = () => {
@@ -77,7 +77,7 @@ const ProductDetailPage = () => {
             return
         }
         if (cartProduct.quantity > 1) {
-            dispatch(addProductToCart({userId:auth?._id,date:new Date(),products:[{_id:product?._id,title:product?.title,image:product?.image,price:product?.price, quantity: cartProduct?.quantity - 1 }]}));
+            dispatch(addProductToCart({userId:auth?.id,date:new Date(),products:[{id:product?.id,title:product?.title,image:product?.image,price:product?.price, quantity: cartProduct?.quantity - 1 }]}));
         }
     };
 
@@ -141,7 +141,7 @@ const ProductDetailPage = () => {
                                 </button>
                             </div>
                             <button
-                    onClick={() => handleRemoveItem(cartProduct._id)}
+                    onClick={() => handleRemoveItem(cartProduct.id)}
                     className="bg-red-500 text-white my-5 px-4 py-2 rounded-md hover:bg-red-600"
                   >
                     Remove

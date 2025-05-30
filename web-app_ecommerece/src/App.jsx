@@ -16,8 +16,8 @@ function App() {
       navigate("/")
     }
 
-    if(auth?._id && auth?.role!="admin")[
-      dispatch(getUserCartDetails(auth?._id))
+    if(auth?.id && auth?.role!="admin")[
+      dispatch(getUserCartDetails(auth?.id))
     ]
   },[auth?.token])
 
