@@ -13,7 +13,6 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const {cart,items} = action?.payload
-      console.log("cart,items",cart,items,state?.items);
       
       state.cartId = cart?.id
       state.amount = cart?.amount
@@ -49,6 +48,7 @@ export const { addToCart, removeFromCart, setCart, setCartId } = cartSlice.actio
 
 export const addProductToCart = (payload) => async (dispatch, getState) => {
   try {
+    console.log(payload, getState().cart)
     let cartId = getState().cart.cartId;
     const res = await api.put(`/carts/${cartId}`, payload);
     console.log("addProductToCart",payload);

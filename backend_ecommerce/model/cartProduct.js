@@ -19,6 +19,9 @@ const CartProduct = sequelize.define("cartProduct",
     productId: {
       type: Sequelize.INTEGER,
     },
+    cartId:{
+      type: Sequelize.INTEGER,
+    },
     quantity: { type: Sequelize.INTEGER, defaultValue:0 },
     price: { type: Sequelize.INTEGER, defaultValue:0 },
     isActive:{type:Sequelize.BOOLEAN, defaultValue:true}

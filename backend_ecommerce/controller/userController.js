@@ -92,71 +92,34 @@ exports.getProductById = async (req, res) => {
 exports.getUserCartDetails = async (req, res) => {
     try {
         const {userId} = req.params
-        // const pipeline = [
-        //   {
-        //     '$match': {
-        //       'userId': new ObjectId(userId), 
-        //       'isActive': true
-        //     }
-        //   }, {
-        //     '$lookup': {
-        //       'from': 'cart_products', 
-        //       'localField': 'id', 
-        //       'foreignField': 'cartId', 
-        //       'as': 'cart_product', 
-        //       'pipeline': [
-        //         {
-        //           '$match': {
-        //             'isActive': true
-        //           }
-        //         }, {
-        //           '$lookup': {
-        //             'from': 'products', 
-        //             'localField': 'productId', 
-        //             'foreignField': 'id', 
-        //             'as': 'product', 
-        //             'pipeline': [
-        //               {
-        //                 '$project': {
-        //                   'title': 1, 
-        //                   'image': 1
-        //                 }
-        //               }
-        //             ]
-        //           }
-        //         }, {
-        //           '$unwind': {
-        //             'path': '$product', 
-        //             'preserveNullAndEmptyArrays': true
-        //           }
-        //         }, {
-        //           '$addFields': {
-        //             'title': '$product.title', 
-        //             'image': '$product.image'
-        //           }
-        //         }, {
-        //           '$unset': 'product'
-        //         }
-        //       ]
-        //     }
-        //   }
-        // ]
+        
 
         const query = `
-        SELECT
-            c.*,
-            cp.*,
-            p.title AS product_title,
-            p.image AS product_image
-        FROM
-            carts c
-        LEFT JOIN
-            cart_products cp ON c.id = cp.cartid AND cp.is_active = TRUE
-        LEFT JOIN
-            products p ON cp.productid = p.id
-        WHERE
-            c.userid = :userId AND c.is_active = TRUE;
-      `
+  SELECT 
+    c.id AS cart_id,
+    c."userId",
+    c."isActive",
+    COALESCE(
+      json_agg(
+        json_build_object(
+          'id', cp.id,
+          'productId', cp."productId",
+          'price', cp.price,
+          'quantity', cp.quantity,
+          'title', p.title,
+          'image', p.image
+        )
+      ) FILTER (WHERE cp.id IS NOT NULL),
+      '[]'
+    ) AS cart_product
+  FROM carts c
+  LEFT JOIN "cartProducts" cp 
+    ON c.id = cp."cartId" AND cp."isActive" = true
+  LEFT JOIN products p 
+    ON cp."productId" = p.id
+  WHERE c."userId" = :userId AND c."isActive" = true
+  GROUP BY c.id
+`
       
       const [results, metadata] = await sequelize.query(query,
         {
@@ -166,6 +129,7 @@ exports.getUserCartDetails = async (req, res) => {
       );
       res.status(200).json({ status: 1, message: 'Cart fetched', data: results });
     } catch (err) {
+      console.log(err)
       res.status(500).json({status:0, message: 'Server error', error: err.message });
     }
   };
